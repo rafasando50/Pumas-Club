@@ -73,6 +73,13 @@ public class JugadorService {
         return new JugadorDTO(jugador.getId() , jugador.getName(), jugador.getPosition(), jugador.getTeam(), jugador.getCountry(), jugador.getAge(), jugador.getMatches(), jugador.getGoals()); 
     }
 
+    public void deleteJugador(Long id) {
+        Jugador jugador = jugadorRepository.getById(id)
+        .orElseThrow(() -> new NoSuchElementException("jugador no encontrado"));
+
+        jugadorRepository.delete(jugador);
+    }
+
     public Jugador toModel(CreateJugadorDTO dto) {
         return new Jugador(
             0,

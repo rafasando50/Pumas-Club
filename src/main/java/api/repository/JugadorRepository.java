@@ -51,4 +51,8 @@ public class JugadorRepository {
         }
         throw new NoSuchElementException("Jugador no encontrado");
     }
+
+    public void delete(Jugador data) {
+        jugadores.remove(data);
+    }
 }

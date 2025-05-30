@@ -3,6 +3,7 @@ package api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,7 +24,7 @@ public class JugadorController {
 
     @RequestMapping("/jugadores")
     public List<JugadorDTO> getAll() {
-        return jugadorService.getAll();
+        return jugadorService.getAll(); 
     }
 
     @RequestMapping("/crearJugador")
@@ -34,5 +35,10 @@ public class JugadorController {
     @PatchMapping("/actualizarJugador/{id}")
     public JugadorDTO update(@PathVariable("id") Long id, @RequestBody UpdateJugadorDTO data) {
         return jugadorService.updateJugador(id, data);
+    }
+
+    @DeleteMapping("/eliminarJugador/{id}")
+    public void deteteJugador(@PathVariable("id") Long id) {
+        jugadorService.deleteJugador(id);
     }
 }
