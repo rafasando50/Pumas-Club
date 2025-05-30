@@ -2,6 +2,7 @@ package api.repository;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
@@ -41,25 +42,13 @@ public class JugadorRepository {
         return Optional.empty();
     }
 
-    public void update(long id, Jugador data) {
-        Optional<Jugador> entry = getById(id);
-
-        if(entry.isPresent()) {
-            return;
+    public Jugador update(Jugador data) {
+        for (int i = 0; i < jugadores.size(); i++) {
+            if(jugadores.get(i).getId() == data.getId()) {
+                jugadores.set(i, data);
+                return data;
+            }
         }
-
-        Jugador jugador = entry.get();
-
-        if(data.getName() != null) {
-            jugador.setName(data.getName());
-        }
-
-        if(data.getPosition() != null) {
-            jugador.setPosition(data.getPosition());
-        }
-
-        if(data.getTeam() != null) {
-            jugador.setTeam(data.getTeam());
-        }
+        throw new NoSuchElementException("Jugador no encontrado");
     }
 }
