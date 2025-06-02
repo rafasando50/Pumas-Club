@@ -46,4 +46,9 @@ public class JugadorController {
     public JugadorDTO aumetarGol(@PathVariable("id") Long id) {
         return jugadorService.aumentarGol(id);
     }
+
+    @PatchMapping("/partido/{id}")
+    public JugadorDTO aumentarPartido(@PathVariable("id") Long id) {
+        return jugadorService.aumentarPartido(id);
+    }
 }

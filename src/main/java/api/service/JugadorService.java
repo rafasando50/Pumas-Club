@@ -82,6 +82,26 @@ public class JugadorService {
         jugadorRepository.delete(jugador);
     }
 
+    public JugadorDTO aumentarPartido(Long id) {
+        Jugador jugador = jugadorRepository.getById(id)
+            .orElseThrow(() -> new NoSuchElementException("Jugador no encontrado"));
+
+        jugador.setMatches(jugador.getMatches() + 1);
+
+        jugadorRepository.save(jugador);
+
+        return new JugadorDTO(
+            jugador.getId(),
+            jugador.getName(),
+            jugador.getPosition(),
+            jugador.getTeam(),
+            jugador.getCountry(),
+            jugador.getAge(),
+            jugador.getMatches(),
+            jugador.getGoals()
+        );
+}
+
     public JugadorDTO aumentarGol(Long id) {
         Jugador jugador = jugadorRepository.getById(id)
             .orElseThrow(() -> new NoSuchElementException("jugador no encontrado"));
