@@ -77,7 +77,19 @@ public class JugadorService {
         Jugador jugador = jugadorRepository.getById(id)
         .orElseThrow(() -> new NoSuchElementException("jugador no encontrado"));
 
+        jugador.setGoals(jugador.getGoals() + 1);
+
         jugadorRepository.delete(jugador);
+    }
+
+    public JugadorDTO aumentarGol(Long id) {
+        Jugador jugador = jugadorRepository.getById(id)
+            .orElseThrow(() -> new NoSuchElementException("jugador no encontrado"));
+
+        jugador.setGoals(jugador.getGoals() + 1);
+        jugador = jugadorRepository.update(jugador);
+
+        return toDTO(jugador);
     }
 
     public Jugador toModel(CreateJugadorDTO dto) {

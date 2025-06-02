@@ -41,4 +41,9 @@ public class JugadorController {
     public void deteteJugador(@PathVariable("id") Long id) {
         jugadorService.deleteJugador(id);
     }
+
+    @PatchMapping("/gol/{id}")
+    public JugadorDTO aumetarGol(@PathVariable("id") Long id) {
+        return jugadorService.aumentarGol(id);
+    }
 }
