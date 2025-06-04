@@ -1,15 +1,14 @@
 package api.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import api.dto.CreateJugadorDTO;
 import api.dto.JugadorDTO;
 import api.dto.UpdateJugadorDTO;
@@ -30,11 +29,16 @@ public class JugadorController {
 
     @RequestMapping("/crearJugador")
     public JugadorDTO save(@Valid @RequestBody CreateJugadorDTO data) {
-        List<String> historyTeams = data.getHistoryTeams(); // Recibimos el historial de equipos
+        List<String> historyTeams = data.getHistoryTeams(); 
         Jugador jugador = new Jugador(0, data.getName(), data.getPosition(), data.getTeam(),
                 data.getCountry(), data.getAge(), data.getMatches(),
-                data.getGoals(), historyTeams); // Creamos el jugador con el historial
-        return jugadorService.save(jugador); // Guardamos el jugador en el servicio
+                data.getGoals(), historyTeams); 
+        return jugadorService.save(jugador);
+    }
+
+    @GetMapping("/jugador/{id}")
+    public JugadorDTO getJugadorById(@PathVariable("id") Long id) {
+        return jugadorService.getJugadorById(id);
     }
 
     @PatchMapping("/actualizarJugador/{id}")
@@ -56,4 +60,5 @@ public class JugadorController {
     public JugadorDTO aumentarPartido(@PathVariable("id") Long id) {
         return jugadorService.aumentarPartido(id);
     }
+
 }

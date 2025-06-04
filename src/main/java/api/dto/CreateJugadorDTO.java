@@ -92,7 +92,5 @@ public class CreateJugadorDTO {
     public void setGoals(int goals) {
         this.goals = goals;
     }
-
     
-
 }

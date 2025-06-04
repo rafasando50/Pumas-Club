@@ -32,8 +32,14 @@ public class JugadorService {
     }
 
     public JugadorDTO save(Jugador jugador) {
-        // Guardar el jugador y convertirlo a DTO
         return toDTO(jugadorRepository.save(jugador));
+    }
+
+    public JugadorDTO getJugadorById(Long id) {
+        Jugador jugador = jugadorRepository.getById(id)
+                .orElseThrow(() -> new NoSuchElementException("Jugador no encontrado"));
+                
+        return toDTO(jugador);
     }
 
     public JugadorDTO updateJugador(Long id, UpdateJugadorDTO data) {
@@ -68,7 +74,6 @@ public class JugadorService {
             jugador.setGoals(data.getGoals());
         }
 
-        // Agregar la actualización de historyTeams
         if (data.getHistoryTeams() != null) {
             jugador.setHistoryTeams(data.getHistoryTeams());
         }
