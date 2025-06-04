@@ -38,7 +38,7 @@ public class JugadorService {
     public JugadorDTO getJugadorById(Long id) {
         Jugador jugador = jugadorRepository.getById(id)
                 .orElseThrow(() -> new NoSuchElementException("Jugador no encontrado"));
-                
+
         return toDTO(jugador);
     }
 
@@ -101,7 +101,11 @@ public class JugadorService {
 
     public JugadorDTO aumentarPartido(Long id) {
         Jugador jugador = jugadorRepository.getById(id)
-                .orElseThrow(() -> new NoSuchElementException("Jugador no encontrado"));
+        .orElseThrow(() -> new NoSuchElementException("Jugador no encontrado"));
+
+        if (jugador.getId() == 0) {
+            throw new IllegalStateException("Jugador tiene un id inválido.");
+        }
 
         jugador.setMatches(jugador.getMatches() + 1);
 

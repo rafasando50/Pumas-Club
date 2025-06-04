@@ -11,10 +11,9 @@ import api.model.Jugador;
 
 @Repository
 public class JugadorRepository {
-    
+
     private long currentId;
     private List<Jugador> jugadores;
-
 
     public JugadorRepository() {
         currentId = 0;
@@ -26,14 +25,19 @@ public class JugadorRepository {
     }
 
     public Jugador save(Jugador data) {
-        data.setId(++currentId);
-        jugadores.add(data);
-        return data;
+        Optional<Jugador> existingJugador = getById(data.getId());
+        if (existingJugador.isPresent()) {
+            return update(data);
+        } else {
+            data.setId(++currentId);
+            jugadores.add(data);
+            return data;
+        }
     }
 
     public Optional<Jugador> getById(long id) {
 
-        for(Jugador jugador : jugadores) {
+        for (Jugador jugador : jugadores) {
             if (jugador.getId() == id) {
                 return Optional.of(jugador);
             }
@@ -43,13 +47,14 @@ public class JugadorRepository {
     }
 
     public Jugador update(Jugador data) {
-        for (int i = 0; i < jugadores.size(); i++) {
-            if(jugadores.get(i).getId() == data.getId()) {
-                jugadores.set(i, data);
-                return data;
-            }
+        Optional<Jugador> existingJugador = getById(data.getId());
+        if (existingJugador.isPresent()) {
+            jugadores.remove(existingJugador.get());
+            jugadores.add(data);
+            return data;
+        } else {
+            throw new NoSuchElementException("Jugador no encontrado");
         }
-        throw new NoSuchElementException("Jugador no encontrado");
     }
 
     public void delete(Jugador data) {
