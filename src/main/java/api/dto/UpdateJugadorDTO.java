@@ -1,5 +1,7 @@
 package api.dto;
 
+import java.util.List;
+
 public class UpdateJugadorDTO {
     
     private String name;
@@ -9,6 +11,7 @@ public class UpdateJugadorDTO {
     private Integer age;
     private Integer matches;
     private Integer goals;
+    private List<String> historyTeams;
 
     public UpdateJugadorDTO() {
 
@@ -56,7 +59,10 @@ public class UpdateJugadorDTO {
     public void setGoals(Integer goals) {
         this.goals = goals;
     }
-
-
-    
+    public List<String> getHistoryTeams() {
+        return historyTeams;
+    }
+    public void setHistoryTeams(List<String> historyTeams) {
+        this.historyTeams = historyTeams;
+    }
 }

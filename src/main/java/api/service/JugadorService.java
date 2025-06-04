@@ -15,7 +15,7 @@ import api.repository.JugadorRepository;
 
 @Service
 public class JugadorService {
-    
+
     @Autowired
     private JugadorRepository jugadorRepository;
 
@@ -31,14 +31,14 @@ public class JugadorService {
         return data;
     }
 
-
-    public JugadorDTO save(CreateJugadorDTO data) {
-        Jugador model = toModel(data);
-        return toDTO(jugadorRepository.save(model));
+    public JugadorDTO save(Jugador jugador) {
+        // Guardar el jugador y convertirlo a DTO
+        return toDTO(jugadorRepository.save(jugador));
     }
 
     public JugadorDTO updateJugador(Long id, UpdateJugadorDTO data) {
-        Jugador jugador = jugadorRepository.getById(id).orElseThrow(() -> new NoSuchElementException("jugador no encontrado"));
+        Jugador jugador = jugadorRepository.getById(id)
+                .orElseThrow(() -> new NoSuchElementException("jugador no encontrado"));
 
         if (data.getName() != null) {
             jugador.setName(data.getName());
@@ -62,49 +62,61 @@ public class JugadorService {
 
         if (data.getMatches() != null) {
             jugador.setMatches(data.getMatches());
-        }   
+        }
 
         if (data.getGoals() != null) {
             jugador.setGoals(data.getGoals());
         }
 
+        // Agregar la actualización de historyTeams
+        if (data.getHistoryTeams() != null) {
+            jugador.setHistoryTeams(data.getHistoryTeams());
+        }
+
         jugador = jugadorRepository.update(jugador);
 
-        return new JugadorDTO(jugador.getId() , jugador.getName(), jugador.getPosition(), jugador.getTeam(), jugador.getCountry(), jugador.getAge(), jugador.getMatches(), jugador.getGoals()); 
+        return new JugadorDTO(
+                jugador.getId(),
+                jugador.getName(),
+                jugador.getPosition(),
+                jugador.getTeam(),
+                jugador.getCountry(),
+                jugador.getAge(),
+                jugador.getMatches(),
+                jugador.getGoals(),
+                jugador.getHistoryTeams());
     }
 
     public void deleteJugador(Long id) {
         Jugador jugador = jugadorRepository.getById(id)
-        .orElseThrow(() -> new NoSuchElementException("jugador no encontrado"));
-
-        jugador.setGoals(jugador.getGoals() + 1);
+                .orElseThrow(() -> new NoSuchElementException("jugador no encontrado"));
 
         jugadorRepository.delete(jugador);
     }
 
     public JugadorDTO aumentarPartido(Long id) {
         Jugador jugador = jugadorRepository.getById(id)
-            .orElseThrow(() -> new NoSuchElementException("Jugador no encontrado"));
+                .orElseThrow(() -> new NoSuchElementException("Jugador no encontrado"));
 
         jugador.setMatches(jugador.getMatches() + 1);
 
         jugadorRepository.save(jugador);
 
         return new JugadorDTO(
-            jugador.getId(),
-            jugador.getName(),
-            jugador.getPosition(),
-            jugador.getTeam(),
-            jugador.getCountry(),
-            jugador.getAge(),
-            jugador.getMatches(),
-            jugador.getGoals()
-        );
-}
+                jugador.getId(),
+                jugador.getName(),
+                jugador.getPosition(),
+                jugador.getTeam(),
+                jugador.getCountry(),
+                jugador.getAge(),
+                jugador.getMatches(),
+                jugador.getGoals(),
+                jugador.getHistoryTeams());
+    }
 
     public JugadorDTO aumentarGol(Long id) {
         Jugador jugador = jugadorRepository.getById(id)
-            .orElseThrow(() -> new NoSuchElementException("jugador no encontrado"));
+                .orElseThrow(() -> new NoSuchElementException("jugador no encontrado"));
 
         jugador.setGoals(jugador.getGoals() + 1);
         jugador = jugadorRepository.update(jugador);
@@ -114,27 +126,27 @@ public class JugadorService {
 
     public Jugador toModel(CreateJugadorDTO dto) {
         return new Jugador(
-            0,
-            dto.getName(),
-            dto.getPosition(),
-            dto.getTeam(),
-            dto.getCountry(),
-            dto.getAge(),
-            dto.getMatches(),
-            dto.getGoals()
-        );
+                0,
+                dto.getName(),
+                dto.getPosition(),
+                dto.getTeam(),
+                dto.getCountry(),
+                dto.getAge(),
+                dto.getMatches(),
+                dto.getGoals(),
+                dto.getHistoryTeams());
     }
 
     public JugadorDTO toDTO(Jugador jugador) {
         return new JugadorDTO(
-            jugador.getId(),
-            jugador.getName(),
-            jugador.getPosition(),
-            jugador.getTeam(),
-            jugador.getCountry(),
-            jugador.getAge(),
-            jugador.getMatches(),
-            jugador.getGoals()
-        );
+                jugador.getId(),
+                jugador.getName(),
+                jugador.getPosition(),
+                jugador.getTeam(),
+                jugador.getCountry(),
+                jugador.getAge(),
+                jugador.getMatches(),
+                jugador.getGoals(),
+                jugador.getHistoryTeams());
     }
 }

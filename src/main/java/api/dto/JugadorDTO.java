@@ -1,5 +1,7 @@
 package api.dto;
 
+import java.util.List;
+
 public class JugadorDTO {
 
     private long id;
@@ -10,8 +12,9 @@ public class JugadorDTO {
     private int age;
     private int matches;
     private int goals;
+    private List<String> historyTeams;
 
-    public JugadorDTO(long id, String name, String position, String team, String country, int age, int matches, int goals) {
+    public JugadorDTO(long id, String name, String position, String team, String country, int age, int matches, int goals, List<String> historyTeams) {
         this.id = id;
         this.name = name;
         this.position = position;
@@ -20,6 +23,7 @@ public class JugadorDTO {
         this.age = age;
         this.matches = matches;
         this.goals = goals;
+        this.historyTeams = historyTeams;
     }
 
     public long getId() {
@@ -35,6 +39,14 @@ public class JugadorDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+     public List<String> getHistoryTeams() {
+        return historyTeams;
+    }
+
+    public void setHistoryTeams(List<String> historyTeams) {
+        this.historyTeams = historyTeams;
     }
 
     public String getPosition() {
@@ -84,5 +96,7 @@ public class JugadorDTO {
     public void setGoals(int goals) {
         this.goals = goals;
     }
+
+
  
 }

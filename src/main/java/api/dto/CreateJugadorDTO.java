@@ -1,5 +1,7 @@
 package api.dto;
 
+import java.util.List;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
@@ -21,6 +23,8 @@ public class CreateJugadorDTO {
     private int matches;
     private int goals;
 
+    private List<String> historyTeams;
+
     public CreateJugadorDTO() {
 
     }
@@ -31,6 +35,14 @@ public class CreateJugadorDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<String> getHistoryTeams() {
+        return historyTeams;
+    }
+
+    public void setHistoryTeams(List<String> historyTeams) {
+        this.historyTeams = historyTeams;
     }
 
     public String getPosition() {

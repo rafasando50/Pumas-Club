@@ -1,5 +1,7 @@
 package api.model;
 
+import java.util.List;
+
 public class Jugador {
 
     private long id;
@@ -10,9 +12,10 @@ public class Jugador {
     private int age;
     private int matches;
     private int goals;
+    private List<String> historyTeams;
 
 
-    public Jugador(long id, String name, String position, String team, String country, int age, int matches, int goals) {
+    public Jugador(long id, String name, String position, String team, String country, int age, int matches, int goals, List<String> historyTeams) {
         this.id = id;
         this.name = name;
         this.position = position;
@@ -21,6 +24,7 @@ public class Jugador {
         this.age = age;
         this.matches = matches;
         this.goals = goals;
+        this.historyTeams = historyTeams;
     }
 
     public long getId() {
@@ -29,6 +33,14 @@ public class Jugador {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public List<String> getHistoryTeams() {
+        return historyTeams;
+    }
+
+    public void setHistoryTeams(List<String> historyTeams) {
+        this.historyTeams = historyTeams;
     }
 
     public String getName() {

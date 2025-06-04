@@ -13,23 +13,28 @@ import org.springframework.web.bind.annotation.RestController;
 import api.dto.CreateJugadorDTO;
 import api.dto.JugadorDTO;
 import api.dto.UpdateJugadorDTO;
+import api.model.Jugador;
 import api.service.JugadorService;
 import jakarta.validation.Valid;
 
 @RestController
 public class JugadorController {
-    
+
     @Autowired
     private JugadorService jugadorService;
 
     @RequestMapping("/jugadores")
     public List<JugadorDTO> getAll() {
-        return jugadorService.getAll(); 
+        return jugadorService.getAll();
     }
 
     @RequestMapping("/crearJugador")
     public JugadorDTO save(@Valid @RequestBody CreateJugadorDTO data) {
-        return jugadorService.save(data);
+        List<String> historyTeams = data.getHistoryTeams(); // Recibimos el historial de equipos
+        Jugador jugador = new Jugador(0, data.getName(), data.getPosition(), data.getTeam(),
+                data.getCountry(), data.getAge(), data.getMatches(),
+                data.getGoals(), historyTeams); // Creamos el jugador con el historial
+        return jugadorService.save(jugador); // Guardamos el jugador en el servicio
     }
 
     @PatchMapping("/actualizarJugador/{id}")
