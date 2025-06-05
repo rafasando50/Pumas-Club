@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/rafasando50/Pumas-Club.git'  
+                git url: 'https://github.com/rafasando50/Pumas-Club.git', branch: 'main'  
             }
         }
 
